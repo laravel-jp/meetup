@@ -7,6 +7,6 @@ Laravel Meetup Tokyo Vol.4
 簡単な内容を予定しています。
 
 ##事前準備
-php5.4環境構築  
-ext-mcryptインストール
+**php5.4環境構築**  
+**ext-mcryptインストール**  
 ビルトインサーバで動かすので、apache, nginxなどのwebサーバは不要です
