@@ -8,7 +8,7 @@ Laravel Meetup Tokyo Vol.4
 モデル、カスタムフィルター、カスタムバリデート、コンテナ周りまでの  
 簡単な内容を予定しています。
 
-##事前準備{#header1} 
+##事前準備 {#header1} 
 **php5.4環境構築**  
 **ext-mcryptインストール**  
 phpのパスを通しておくと便利です。  
@@ -56,7 +56,7 @@ $ mv composer.phar /usr/local/bin/composer(など任意の場所へ設置して�
 ```
 **不要の方は、/パス/composer.phpで利用して下さい。**
 
-##Laravelインストール{#header2} 
+##Laravelインストール {#header2} 
 今回は、公式laravelフレームワークをインストールします  
 設置するディレクトリで以下の様にコマンドを実行して下さい  
 ```bash
