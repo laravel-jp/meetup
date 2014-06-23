@@ -184,7 +184,7 @@ router.phpは先ほどものを以下の様に変更します
 ```php
 \Route::get('/', function() {
     $array = [
-        'name', \Input::get('name', "Laravel!")
+        'name' => \Input::get('name', "Laravel!")
         // 配列に追加
     ];
     return \View::make('index', $array);
