@@ -153,7 +153,7 @@ Exceptionが投げられたはずです。
 http://localhost:8000にアクセスするとそのままで何も変わりません  
 http://localhost:8000/?name=world としてアクセスするとnameが反映されます  
 **\Input::get()は、$_GETでも$_POSTでも特に区別する事なく値を取得します**  
-**$_FILESでも同じです！**  
+**$_FILESは\Input::file()！**  
 第二引数でデフォルト値を設定できます  
 
 ###routerとview
