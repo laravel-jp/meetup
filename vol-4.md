@@ -3,7 +3,7 @@ Laravel Meetup Tokyo Vol.4
 #目次
 [事前準備](#事前準備)  
 [Laravelインストール](#Laravelインストール)  
-[hello Laravel](#hello Laravel)
+[helloLaravel](#hello Laravel)
 #Hands On
 初めて触る方向けや、  
 モデル、カスタムフィルター、カスタムバリデート、コンテナ周りまでの  
@@ -64,8 +64,9 @@ $ mv composer.phar /usr/local/bin/composer(など任意の場所へ設置して�
 #composerのパスを通している場合はこちら
 $ composer create-project laravel/laravel プロジェクト名(英語で記述) --prefer-dist
 #composerのパスを通していない場合は指定して実行して下さい
-$ /パス/composer.php create-project laravel/laravel プロジェクト名(英語で記述) --prefer-dist
+$ php /パス/composer.php create-project laravel/laravel プロジェクト名(英語で記述) --prefer-dist
 ```
+**以降は$ php composer.pharではなく$ composerと記します**
 インストール完了までしばしお待ちください
 ###実行権限
 app/storage 配下にsessionやテンプレートのcacheファイル等が出力されるため、  
