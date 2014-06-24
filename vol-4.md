@@ -4,9 +4,11 @@ Laravel Meetup Tokyo Vol.4
 [事前準備](#事前準備)  
 [Laravelインストール](#Laravelインストール)  
 [helloLaravel](#helloLaravel)
-[はじめてのcontroller](#はじめてのcontroller)
-[はじめてのバリデート](#はじめてのバリデート)
-[はじめてのカスタムバリデート](#はじめてのカスタムバリデート)
+[はじめてのrouter](#はじめてのrouter)  
+[はじめてのcontroller](#はじめてのcontroller)  
+[はじめてのバリデート](#はじめてのバリデート)  
+[はじめてのカスタムバリデート](#はじめてのカスタムバリデート)  
+
 #Hands On
 初めて触る方向けや、  
 **モデル(Stub)**、  
@@ -121,7 +123,7 @@ $ php artisan serve --port 8888
 $ php artisan serve --host 192.168.1.1 --port 8888
 ```
 
-##はじめてのrouter
+#はじめてのrouter
 router.phpを以下の様に変更してみて下さい  
 ```php
 \Route::get('/', function() {
@@ -319,3 +321,7 @@ public function showWelcome()
 ```
 デフォルトで様々なルールが用意されています。  
 [バリデーション](http://laravel4.kore1server.com/docs/42/validation)
+#はじめてのモデル
+今回モデルは使用しませんが、下記の様なスタブを使ってcontorollerで使用してみましょう  
+
+#はじめてのフィルター
