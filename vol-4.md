@@ -4,16 +4,18 @@ Laravel Meetup Tokyo Vol.4
 [事前準備](#事前準備)  
 [Laravelインストール](#Laravelインストール)  
 [helloLaravel](#helloLaravel)
-[はじめてのrouter](#はじめてのrouter)  
-[はじめてのcontroller](#はじめてのcontroller)  
+[はじめてのルーター](##はじめてのルーター)  
+[はじめてのコントローラー](#はじめてのコントローラー)  
 [はじめてのバリデート](#はじめてのバリデート)  
 [はじめてのカスタムバリデート](#はじめてのカスタムバリデート)  
+[はじめてのモデル](#はじめてのモデル)  
+[はじめてのフィルター](#はじめてのフィルター)  
 
 #Hands On
-初めて触る方向けや、  
-**モデル(Stub)**、  
-**カスタムフィルター**、  
-**カスタムバリデート**、  
+初めて触る方向けに、  
+**モデル(Stub)**  
+**カスタムフィルター**  
+**カスタムバリデート**  
 **コンテナ周り**  
 
 までの簡単な内容を予定しています。
@@ -123,7 +125,7 @@ $ php artisan serve --port 8888
 $ php artisan serve --host 192.168.1.1 --port 8888
 ```
 
-#はじめてのrouter
+#はじめてのルーター
 router.phpを以下の様に変更してみて下さい  
 ```php
 \Route::get('/', function() {
@@ -166,6 +168,12 @@ http://localhost:8000/?name=world としてアクセスするとnameが反映さ
 **$_FILESは\Input::file()！**  
 第二引数でデフォルト値を設定できます  
 
+今設定されているルーターの情報は
+```bash
+$ php artisan routes
+```
+で確認できます  
+
 ###routerとview
 bladeテンプレートを使って同じ事をしてみましょう  
 app/views/index.blade.phpを作成してください  
@@ -202,7 +210,7 @@ router.phpは先ほどものを以下の様に変更します
 ```
 コントローラー要らずで、小さいアプリケーション等はこれだけでも十分実装できます
 
-#はじめてのcontroller
+#はじめてのコントローラー
 デフォルトで設置されているHomeControllerを使用します。  
 先ほどのviewを使用しますので、下記の様に変更します
 ```php
@@ -250,7 +258,7 @@ public function showWelcome()
     if ($validator->fails()) {
         return \Response::json($validator->messages(), 500);
     }
-    return View::make('index')
+    return \View::make('index')
         ->with('name', \Input::get('name', "Laravel!"));
 }
 ```
@@ -272,7 +280,7 @@ public function showWelcome()
     if ($validator->fails()) {
         return \Response::json($validator->messages(), 500);
     }
-    return View::make('index')
+    return \View::make('index')
         ->with('name', \Input::get('name', "Laravel!"));
 }
 ```
@@ -304,7 +312,7 @@ public function showWelcome()
     if ($validator->fails()) {
         return \Response::json($validator->messages(), 500);
     }
-    return View::make('index')
+    return \View::make('index')
         ->with('name', \Input::get('name', "Laravel!"));
 }
 ```
@@ -322,6 +330,232 @@ public function showWelcome()
 デフォルトで様々なルールが用意されています。  
 [バリデーション](http://laravel4.kore1server.com/docs/42/validation)
 #はじめてのモデル
-今回モデルは使用しませんが、下記の様なスタブを使ってcontorollerで使用してみましょう  
+今回データベースは使用しませんが、  
+下記の様なスタブを使ってcontorollerで使用してみましょう  
+app/models配下にMeetUp.phpを作成します  
+```php
+<?php
+namespace Models;
 
+class MeetUp
+{
+
+    public function get()
+    {
+        return [
+            'Laravel',
+            'Symfony',
+            'CakePHP'
+        ];
+    }
+}
+```
+配列だけを返却するシンプルなものです  
+
+コントローラーからこのクラスを使用するには、  
+composerのautoloaderに登録しなければなりません  
+composer.jsonを設置しているディレクトリで実行します
+```php
+$ composer dump-autoload
+```
+**Laravelのcomposer.jsonは、デフォルトのオートローラーはclassmapになっています  
+そのためクラスを追加した場合は必ずdump-autoloadする必要があります。**
+```json
+	"autoload": {
+		"classmap": [
+			"app/commands",
+			"app/controllers",
+			"app/models",
+			"app/database/migrations",
+			"app/database/seeds",
+			"app/tests/TestCase.php"
+		]
+	},
+```
+これ以外のディレクトリをオートローダーに含める場合は必ず追記しなければなりません
+```json
+  "autoload": {
+    "classmap": [
+      "app/commands",
+      "app/controllers",
+      "app/models",
+      "app/database/migrations",
+      "app/database/seeds",
+      "app/tests/TestCase.php",
+      "追加したディレクトリ"
+    ]
+  },
+```
+PHPのコーディング規約 PSRに変更する事でdump-autoloadは不要になりますので、  
+慣れてきたら変更してみて下さい  
+Laravelのディレクトリ構造はユーザーの好みでほとんどが自由に変更する事ができます  
+bootstrap配下やconfig配下のソースを見てみましょう  
+
+composerに登録したら、コントローラーです  
+先ほどのHomeController.phpを使用します  
+折角ですが先ほどのバリデートはコメントアウトです  
+コンストラクタをこのようにします
+```php
+
+    /**
+     * @param \Models\MeetUp $meetup
+     */
+    public function __construct(\Models\MeetUp $meetup)
+    {
+        $this->meetup = $meetup;
+    }
+```
+タイプヒントで使用したいクラスを記述するだけです！！  
+実際にDBや何かしらのデータストレージを使う場合も、  
+コントローラーに直接 データベースのDBファサードを記述すると、  
+DBに接続している状態でなければ実行できない(依存)コントローラーになります。  
+Fatなコントローラーの誕生です!!!  
+**ものすごく小さなアプリケーションの場合はそこまで神経質にならなくてもかまいません**  
+
+下記の様にして、ブラウザなどから**http://localhost:8000**にアクセスしてみましょう
+```php
+class HomeController extends BaseController
+{
+    /** @var Models\MeetUp  */
+    public $meetup;
+
+    /**
+     * @param \Models\MeetUp $meetup
+     */
+    public function __construct(\Models\MeetUp $meetup)
+    {
+        $this->meetup = $meetup;
+    }
+
+
+    public function showWelcome()
+    {
+        return \Response::json($this->meetup->get());
+    }
+
+}
+```
+折角なのでもう少しLaravelらしくしてみましょう  
+MeetUpにインタフェースを継承させてみます  
+インターフェースは、継承するクラスに、  
+**このメソッドを実装しましょう！**というクラスの設計図みたいなものです  
+
+app/models/MeetUpInterface.phpを作成して下記の様にします  
+```php
+<?php
+namespace Models;
+
+interface MeetUpInterface
+{
+
+    /**
+     * @return mixed
+     */
+    public function get();
+}
+```
+さきほどのMeetUpクラスでインテーデースを継承させます  
+```php
+<?php
+namespace Models;
+
+class MeetUp implements MeetUpInterface
+{
+
+    public function get()
+    {
+        return [
+            'Laravel',
+            'Symfony',
+            'CakePHP'
+        ];
+    }
+}
+```
+続いてHomeController.phpのコンストラクタを下記に変更します
+
+```php
+    /**
+     * @param \Models\MeetUpInterface $meetup
+     */
+    public function __construct(\Models\MeetUpInterface $meetup)
+    {
+        $this->meetup = $meetup;
+    }
+```
+```bash
+$ composer dump-autoload
+```
+を忘れずに実行します  
+そのままアクセスするとinterfaceはインスタンスを生成する事ができないため、当然エラーになります  
+
+##インターフェースと実装を結びつけよう！
+app/start/global.phpに下記のものを追記してみましょう  
+どこでもかまいません  
+```php
+\App::bind('Models\\MeetUpInterface', 'Models\\MeetUp');
+```
+**http://localhost:8000**にアクセスしてみましょう  
+先ほどの値が表示されているはずです  
+このように、直接インスタンスを生成するのではなく、  
+どこか外で定義して実行時に解決することを(依存性の注入)DI(dependency injection)といいます！  
+LaravelのIocコンテナがよろしくやってくれます  
+現在のstubからデータベースに変更する場合でも、  
+同じinterfaceを継承してbindで変更するだけです！  
+コントローラーなど手を入れる所はどこにもありません！  
+更にテストも簡単です！  
+他にも機能は色々あります  
+さきほどのMeetUpクラスはこのようにしてインスタンスを生成する事もできます  
+```php
+    public function __construct()
+    {
+        $this->meetup = \App::make("Models\\MeetUp");
+    }
+```
+
+[IoCコンテナ](http://laravel4.kore1server.com/docs/ioc)
+[Laravel4、IoCコンテナの魔術](http://kore1server.com/146)
+[Laravel IoC コンテナの使い方](http://www.1x1.jp/blog/2014/02/how-to-use-ioc-container-in-laravel.html)
 #はじめてのフィルター
+最後にフィルターを少し触ってみましょう  
+Laravelはコントローラーでそれぞれのuriの処理の前後に処理を挟む事ができます  
+認証していないユーザーのアクセスを制限したり、  
+IPアドレスで制限したり、  
+色々な処理を実装する事ができます  
+app/filter.phpに最初から用意されているものがあります  
+
+下記のフィルターを追記してみます
+```php
+Route::filter('laravel', function() {
+    if (Input::get('name') != "Laravel") {
+        return Response::make("oh my god!", 503);
+    }
+});
+```
+引数nameがLaravel以外だと503を返します  
+/app/routes.phpを下記の様に変更してみましょう
+```php
+\Route::get('/', ['uses' => 'HomeController@showWelcome', 'before' => ['laravel']]);
+```
+さらにroutesでフィルターを指定すると
+```bash
+$ php artisan routes
+```
+でルーターと一緒に確認する事もできます  
+http://localhost:8000  
+http://localhost:8000/?name=symfony  
+http://localhost:8000/?name=Laravel  
+それぞれアクセスして確認してみましょう  
+
+フィルターの指定はroutes.phpに記述する以外に、  
+コントローラーで指定する事もできます  
+```php
+    public function __construct(\Models\MeetUpInterface $meetup)
+    {
+        $this->meetup = $meetup;
+        $this->beforeFilter('laravel', ['only' => ['showWelcome']]);
+    }
+```
+フィルター指定方法はいくつかありますので、  
+好みのものを使用してみて下さい  
+[ルーティング](http://laravel4.kore1server.com/docs/routing)
