@@ -86,8 +86,8 @@ app/storage 配下にsessionやテンプレートのcacheファイル等が出�
 $ chmod -R 777 app/storage
 ```
 ###デバッグを有効にします
-Laravelはhostnameで取得した名前でそれぞれの環境の動作を変更する事ができます。
-'local'に現在お使いのpcのhostnameを追加して下さい。  
+Laravelはhostnameで取得した名前でそれぞれの環境の動作を変更する事ができます。  
+bootstrap/start.phpの**The Application Environment** 'local'に現在お使いのpcのhostnameを追加して下さい。  
 ```php
 $env = $app->detectEnvironment([
     'local' => ['homestead', 'hostnameで追加した名称'],
