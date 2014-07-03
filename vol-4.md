@@ -2,8 +2,8 @@ Laravel Meetup Tokyo Vol.4
 ==========================================
 #目次
 [事前準備](#事前準備)  
-[Laravelインストール](#Laravelインストール)  
-[helloLaravel](#helloLaravel)  
+[Laravelインストール](#laravelインストール)  
+[helloLaravel](#hellolaravel)  
 [はじめてのルーター](#はじめてのルーター)  
 [はじめてのコントローラー](#はじめてのコントローラー)  
 [はじめてのバリデート](#はじめてのバリデート)  
