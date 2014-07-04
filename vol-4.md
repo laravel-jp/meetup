@@ -225,7 +225,7 @@ app/router.phpを次の様に変更します。
 \Route::get('/', "HomeController@showWelcome");
 ```
 ブラウザでアクセスしてみましょう  
-**例 http://localhost:8000, http://localhost:8000/name=world**  
+**例 http://localhost:8000, http://localhost:8000/?name=world**  
 
 **/** 区切りでアクセスしたい場合は、  
 app/router.phpを次の様に
@@ -358,7 +358,7 @@ composer.jsonを設置しているディレクトリで実行します
 ```php
 $ composer dump-autoload
 ```
-**Laravelのcomposer.jsonは、デフォルトのオートローラーはclassmapになっています  
+**Laravelのcomposer.jsonは、デフォルトのオートローダーはclassmapになっています  
 そのためクラスを追加した場合は必ずdump-autoloadする必要があります。**
 ```json
 	"autoload": {
