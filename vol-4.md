@@ -2,9 +2,9 @@ Laravel Meetup Tokyo Vol.4
 ==========================================
 #目次
 [事前準備](#事前準備)  
-[Laravelインストール](#Laravelインストール)  
-[helloLaravel](#helloLaravel)
-[はじめてのルーター](##はじめてのルーター)  
+[Laravelインストール](#laravelインストール)  
+[helloLaravel](#hellolaravel)  
+[はじめてのルーター](#はじめてのルーター)  
 [はじめてのコントローラー](#はじめてのコントローラー)  
 [はじめてのバリデート](#はじめてのバリデート)  
 [はじめてのカスタムバリデート](#はじめてのカスタムバリデート)  
@@ -86,8 +86,8 @@ app/storage 配下にsessionやテンプレートのcacheファイル等が出�
 $ chmod -R 777 app/storage
 ```
 ###デバッグを有効にします
-Laravelはhostnameで取得した名前でそれぞれの環境の動作を変更する事ができます。
-'local'に現在お使いのpcのhostnameを追加して下さい。  
+Laravelはhostnameで取得した名前でそれぞれの環境の動作を変更する事ができます。  
+bootstrap/start.phpの**The Application Environment** 'local'に現在お使いのpcのhostnameを追加して下さい。  
 ```php
 $env = $app->detectEnvironment([
     'local' => ['homestead', 'hostnameで追加した名称'],
@@ -242,7 +242,7 @@ public function showWelcome($name = "Laravel!")
 ```
 **例 http://localhost:8000, http://localhost:8000/world**  
 routerだけで記述した場合とさほど変わりません  
-routerとcontorollerの結びつけ方はこの他にも多数あります。
+routerとcontorollerの結びつけ方はこの他にも多数あります。  
 [Laravel/docs/controllers日本語](http://laravel4.kore1server.com/docs/42/controllers)
 #はじめてのバリデート
 バリデートを簡単に使用してみましょう！  
@@ -454,7 +454,7 @@ interface MeetUpInterface
     public function get();
 }
 ```
-さきほどのMeetUpクラスでインテーデースを継承させます  
+さきほどのMeetUpクラスでインターフェースを継承させます  
 ```php
 <?php
 namespace Models;
@@ -512,7 +512,7 @@ LaravelのIocコンテナがよろしくやってくれます
         $this->meetup = \App::make("Models\\MeetUp");
     }
 ```
-
+**慣れてきたらglobal.phpではなく、ServiceProviderについて学んでみましょう**  
 [IoCコンテナ](http://laravel4.kore1server.com/docs/ioc)
 [Laravel4、IoCコンテナの魔術](http://kore1server.com/146)
 [Laravel IoC コンテナの使い方](http://www.1x1.jp/blog/2014/02/how-to-use-ioc-container-in-laravel.html)
